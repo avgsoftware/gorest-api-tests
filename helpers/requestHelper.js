@@ -4,8 +4,7 @@ const BASE_URL = 'https://gorest.co.in/public/v2';
 function createUser(accessToken, userData) {
     return request(BASE_URL)
         .post('/users')
-        //.set('Accept', 'application/json')
-        //.set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
         .set('Authorization', `Bearer ${accessToken}`)
         .send(userData);
 }
@@ -14,26 +13,27 @@ function getUser(accessToken, userId) {
     return request(BASE_URL)
         .get(`/users/${userId}`)
         .set('Accept', 'application/json')
-        .set('Authorization', `Bearer ${accessToken}`);
+        .set('Authorization', `Bearer ${accessToken}`)
 }
 
-function patchUser(accessToken, userId) {
+function updateUser(accessToken, userId, userData) {
     return request(BASE_URL)
-        .get(`/users/${userId}`)
+        .put(`/users/${String(userId)}`)
         .set('Accept', 'application/json')
-        .set('Authorization:', `Bearer ${accessToken}`);
+        .set('Authorization', `Bearer ${accessToken}`)
+        .send(userData);
 }
 
 function deleteUser(accessToken, userId) {
     return request(BASE_URL)
-        .get(`/users/${userId}`)
+        .delete(`/users/${String(userId)}`)
         .set('Accept', 'application/json')
-        .set('Authorization:', `Bearer ${accessToken}`);
+        .set('Authorization', `Bearer ${accessToken}`)
 }
 
 module.exports = {
     createUser,
     getUser,
-    patchUser,
+    updateUser,
     deleteUser
 };
