@@ -1,7 +1,6 @@
 const { createUser, getUser, updateUser, deleteUser } = require('../helpers/requestHelper');
-const { accessToken, createUserWithValidData, createUserWithUnknownGender, createUserWithInvalidEmail, createUserWithInvalidStatus } = require('../utils/constants');
+const { accessToken, createUserWithValidData, createUserWithUnknownGender, createUserWithInvalidEmail, createUserWithInvalidStatus, createUserWithEmptyBody } = require('../utils/constants');
 
-let createdUserId;
 let createdUserEmail;
 
 const missingUserId = 70000000;
@@ -9,7 +8,7 @@ const invalidUserId = "invalidUserId";
 const invalidAccessToken = "noValidToken";
 
 const createUserWithExistingEmail = {
-    "name": "x 1 Ramakrishna",
+    "name": "Test user five",
     "gender": "male",
     "email": createdUserEmail,
     "status": "active"
@@ -45,6 +44,25 @@ test('CREATE a user with an existing email address should return status code 422
 
     createUser(accessToken, createUserWithExistingEmail).expect(422);
 });
+
+test('CREATE a user with an empty body should return status code 422 and validation errors', async () => {
+    const createUserResponse = await createUser(accessToken, createUserWithEmptyBody).expect(422); 
+
+    expect(createUserResponse.body.length).toBe(4);
+
+    const expectedErrors = [
+      { field: "email", message: "can't be blank" },
+      { field: "name", message: "can't be blank" },
+      { field: "gender", message: "can't be blank, can be male of female" }, //a typo in the API response
+      { field: "status", message: "can't be blank" }
+    ];
+
+    expectedErrors.forEach(error => {
+      const receivedError = createUserResponse.body.find(e => e.field === error.field);
+      expect(receivedError).toBeTruthy();
+      expect(receivedError.message).toBe(error.message);
+    });
+  });
 
 test('READ a missing user should return status code 404', async () => {
 

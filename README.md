@@ -1,18 +1,22 @@
-# User Management Test Suite
+# Users API Test Suite
 
-This project contains a suite of automated tests for user management operations using Jest. It tests user creation, retrieval, updating, and deletion through a RESTful API.
+This project contains automated tests designed to verify the functionality of the Users API provided by https://gorest.co.in/.
+The tests cover both positive and negative scenarios to ensure the reliability and correctness of the API endpoints.
+
+Created with JavaScript, Jest and Supertest.
 
 ## Covered test scenarios
 
-- **Create Users**: Validate the creation of users with valid data.
-- **Read Users**: Verify user retrieval operations, including errors for missing or invalid user IDs.
-- **Update Users**: Test updating user details and validate the updated data.
-- **Delete Users**: Confirm deletion operations and handle missing or invalid user IDs correctly.
+- **Create Users**: Tests validating the creation of users with valid data.
+- **Create Users**: Tests validating the creation of users with invalid data fails.
+- **Read Users**: Tests validating user retrieval operations, including missing or invalid user IDs.
+- **Update Users**: Tests updating user details and validate the updated data.
+- **Delete Users**: Tests validating delete operations and handle missing or invalid user IDs correctly.
 
 ## Prerequisites
 
-- Node.js
-- Jest
+- Node.js (project created with node v20.12.2)
+- Jest 
 - Access to the user management RESTful API
 
 ## Getting Started
@@ -23,5 +27,11 @@ To get started with this project, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://your-repository-url-here
+   git clone https://github.com/avgsoftware/gorest-api-tests.git
    cd path-to-your-project
+2. Install npm 
+   ```bash
+   npm install
+3. Run tests
+   ```bash
+   npm test
